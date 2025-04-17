@@ -1,0 +1,7 @@
+{
+    "exampleKey": "Hello Playwright!",
+    "number": 42,
+    "nested": {
+        "key": "Nested Value"
+    }
+}
