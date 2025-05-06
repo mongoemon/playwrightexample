@@ -25,6 +25,9 @@ export class LoginPage {
     await this.page.fill('#password', password);
     await this.page.click('#login-button');
 
+    // Save login session to file
+    await this.page.context().storageState({ path: 'storageState.json' });
+
   }
 
   async expectToBeOnDashboard() {
