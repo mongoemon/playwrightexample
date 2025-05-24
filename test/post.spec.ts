@@ -1,16 +1,23 @@
-const { test, expect } = require('@playwright/test');
+import { test, expect } from '@playwright/test';
 
-test('Fetch all posts', async ({ request }) => {
-  const response = await request.get('https://jsonplaceholder.typicode.com/posts');
-  
-  // Expect response status to be 200
-  expect(response.status()).toBe(200);
-  
-  // Parse JSON response
-  const posts = await response.json();
+test('test posts', async ({ request }) => {
+    // Create a new post
+    const newPost = {
+        title: 'New Post Title',
+        body: 'This is the body of the new post.',
+        userId: 1000,
+    };
+    
+    const createResponse = await request.post('https://jsonplaceholder.typicode.com/posts', {
+        data: newPost,
+    });
+    
+    expect(createResponse.status()).toBe(201);
+    
+    const createdPost = await createResponse.json();
+    expect(createdPost).toHaveProperty('id');
+    expect(createdPost.title).toBe(newPost.title);
+    expect(createdPost.body).toBe(newPost.body);
 
-  // Validate data structure
-  expect(Array.isArray(posts)).toBeTruthy();
-  expect(posts.length).toBeGreaterThan(0);
-  expect(posts[0]).toHaveProperty('id');
+    // Note: Skipping the GET request as the API does not persist data
 });
