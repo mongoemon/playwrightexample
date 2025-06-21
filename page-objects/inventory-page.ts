@@ -28,4 +28,16 @@ export class InventoryPage {
     await expect(removeLocator).toContainText('Remove');
     
   }
+
+  async verifyCartItemCount(expectedCount: string) {
+    const cartLocator = this.page.locator('[data-test="shopping-cart-link"]');
+    await expect(cartLocator).toHaveText(expectedCount);
+  }
+
+  async removeItem(itemName: string) {
+    // Build the data-test attribute for the remove button
+    const removeButtonSelector = `[data-test="remove-${itemName}"]`;
+    const removeLocator = this.page.locator(removeButtonSelector);
+    await removeLocator.click();
+  }
 }
