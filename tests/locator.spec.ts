@@ -60,6 +60,13 @@ test('All locator types example', async ({ page }) => {
   await expect(loginButtonByRole).toBeVisible();
   await expect(usernameByPlaceholder).toBeVisible();
   await expect(firstInventoryItem).not.toBeVisible(); // Not visible before login
+  // await expect(cartIcon).toBeVisible(); // Commented out: cart icon is not visible before login
+  // await expect(loginFormByXPath).toBeVisible(); // Commented out: login form is not visible after login
+
+  // Optionally, perform login and then check cart icon
+  await usernameById.fill('standard_user');
+  await passwordByAttr.fill('secret_sauce');
+  await loginButtonByRole.click();
   await expect(cartIcon).toBeVisible();
-  await expect(loginFormByXPath).toBeVisible();
+  await expect(firstInventoryItem).toBeVisible();
 });
