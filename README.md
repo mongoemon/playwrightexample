@@ -51,6 +51,29 @@ npx playwright test tests/bestpractice.spec.ts
 npx playwright test --ui
 ```
 
+## Running Tests with Different Environments
+
+By default, tests run against the production environment (`https://www.saucedemo.com/`).
+
+To run tests against a different environment, set the `TEST_ENV` variable:
+
+### On Windows PowerShell
+```powershell
+$env:TEST_ENV="dev"; npx playwright test tests/test-env.spec.ts
+```
+
+### On Windows Command Prompt (cmd.exe)
+```cmd
+set TEST_ENV=dev && npx playwright test tests/test-env.spec.ts
+```
+
+### On macOS/Linux/bash
+```sh
+TEST_ENV=dev npx playwright test tests/test-env.spec.ts
+```
+
+Valid values for `TEST_ENV` are: `dev`, `staging`, `prod`.
+
 ## Additional Tips
 - Update credentials and test data in `data/` as needed.
 - Customize or add more page objects in `page-objects/` for new pages.
