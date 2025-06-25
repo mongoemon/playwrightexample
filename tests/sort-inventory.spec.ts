@@ -11,7 +11,12 @@ test('Sort inventory items and verify sorting', async ({ page }) => {
   await page.selectOption('.product_sort_container', 'lohi');
 
   // Get all item prices
-  const prices = await page.$$eval('.inventory_item_price', els => els.map(e => parseFloat(e.textContent.replace('$', ''))));
+  const prices = await page.$$eval('.inventory_item_price', els =>
+    els.map(e => {
+      const text = e.textContent;
+      return text ? parseFloat(text.replace('$', '')) : NaN;
+    })
+  );
   const sorted = [...prices].sort((a, b) => a - b);
   expect(prices).toEqual(sorted);
 });

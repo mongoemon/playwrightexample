@@ -74,6 +74,28 @@ TEST_ENV=dev npx playwright test tests/test-env.spec.ts
 
 Valid values for `TEST_ENV` are: `dev`, `staging`, `prod`.
 
+## Testing Different Resolutions (Responsive & Device Testing)
+
+To run tests at different screen sizes or devices, use the shared `viewports.ts` file:
+
+1. **Import the viewports in your test script:**
+   ```typescript
+   import { VIEWPORTS } from './tests/viewports';
+   ```
+2. **Loop through the viewports and use `test.use()` to set the viewport or device:**
+   ```typescript
+   for (const config of VIEWPORTS) {
+     test.describe(config.name, () => {
+       test.use(config.device ? { ...config.device } : { viewport: config.viewport });
+       // ...your tests...
+     });
+   }
+   ```
+
+**Example:** See `tests/test-different-resolution.spec.ts` for a full example.
+
+This allows you to easily reuse device and viewport settings across all your Playwright test scripts.
+
 ## Additional Tips
 - Update credentials and test data in `data/` as needed.
 - Customize or add more page objects in `page-objects/` for new pages.
