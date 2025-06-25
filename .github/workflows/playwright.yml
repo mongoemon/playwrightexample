@@ -1,4 +1,4 @@
-name: Playwright Tests
+name: Playwright Tests CI
 
 on:
   push:
@@ -22,12 +22,21 @@ jobs:
       - name: Run Playwright tests
         run: npx playwright test
       - name: Upload Playwright HTML report on failure
-        if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
           path: playwright-report/
       - name: Install Newman
         run: npm install -g newman
+      - name: Install Newman HTML Reporter
+        run: npm install -g newman-reporter-html
       - name: Run API tests with Newman
         run: newman run tests/jsonplaceholder.postman_collection.json
+      - name: Run API tests with Newman and generate HTML report
+        run: newman run tests/jsonplaceholder.postman_collection.json -r html --reporter-html-export newman-report.html
+      - name: Upload Newman HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: newman-report
+          path: newman-report.html
