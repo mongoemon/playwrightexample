@@ -96,6 +96,25 @@ To run tests at different screen sizes or devices, use the shared `viewports.ts`
 
 This allows you to easily reuse device and viewport settings across all your Playwright test scripts.
 
+## Running Tests by Tag (Smoke/Regression)
+
+You can use tags in your test titles (e.g., `@smoke`, `@regression`) and filter which tests to run:
+
+### Run only smoke tests
+```sh
+npx playwright test --grep @smoke
+```
+
+### Run only regression tests
+```sh
+npx playwright test --grep @regression
+```
+
+Tags are defined in the test title, e.g.:
+```typescript
+test('@smoke should login successfully', async ({ page }) => { /* ... */ });
+```
+
 ## Additional Tips
 - Update credentials and test data in `data/` as needed.
 - Customize or add more page objects in `page-objects/` for new pages.
